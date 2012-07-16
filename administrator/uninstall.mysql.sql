@@ -1,0 +1,1 @@
+DROP TABLE #__com_supply_order;
