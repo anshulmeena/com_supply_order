@@ -20,7 +20,14 @@ function com_install()
   ?>
 <div class="header">Com_supply_order is sucessfully installed </div>
 <p>
-description of your component
+SI component for Procurement. 
+Supply order request is essential part of work at HCLS. Staff members request items. Genrally items are requested for events, job requirements etc. 
+
+Every request depending on who is requesting it and from whom will go through various approvers. 
+Conditions: 
+1. Less then $1000 then the account owner or 1st approver will approver the request and the request will move to Accounting Dept.
+2. More then $1000 and less then $3000, the request will go to 1st approver (in this account owner) then will move to 2nd approver then after the 2nd approval this request will go to Accounting Dept. 
+
 </p>
 <?php
   }
