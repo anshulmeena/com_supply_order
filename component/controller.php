@@ -15,29 +15,23 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.controller' );
 
- /**
-  * Com_supply_order Component Controller
-  *
-  * @package Com_supply_order
-  */
-
-  class com_supply_orderController extends JController
-  {
-		/**
-		 * Method to show a com_supply_order view
-		 */
-		function display()
+class SupplyOrderController extends JController
+{
+	/**
+	 * Method to show a com_supply_order view
+	 */
+	function display()
+	{
+		// Set a default view if none exists
+		if ( ! JRequest::getCmd( 'view' ) ) {
+			JRequest::setVar('view', 'requests' );
+		}
+		//update the hit count for the item
+		if(JRequest::getCmd('view') == 'item')
 		{
-			 // Set a default view if none exists
-			 if ( ! JRequest::getCmd( 'view' ) ) {
-					JRequest::setVar('view', 'requests' );
-			 }
-		  	 //update the hit count for the item
-  		  	 if(JRequest::getCmd('view') == 'item')
-  			 {
-  				$model =& $this->getModel('item');
-  				$model->hit();
- 			 }
- 			parent::display();
-  		}
-  }
+			$model =& $this->getModel('item');
+			$model->hit();
+		}
+		parent::display();
+	}
+}

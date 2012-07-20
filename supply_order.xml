@@ -21,9 +21,9 @@
 		</sql>
 	</uninstall>
 	<!-- Custom Install Script to execute -->
-	<installfile>install.com_supply_order.php</installfile>
+	<installfile>install.supply_order.php</installfile>
 	<!-- Custom Uninstall Script to execute -->
-	<uninstallfile>uninstall.com_supply_order.php</uninstallfile>
+	<uninstallfile>uninstall.supply_order.php</uninstallfile>
 
 	<!-- Site Main File Copy Section -->
 	<files folder="component">
@@ -35,13 +35,13 @@
 	</files>
 	<!-- Language -->
 	<languages folder="component/language/">
-		<language tag="en-GB">en-GB.com_com_supply_order.ini</language>
+		<language tag="en-GB">en-GB.com_supply_order.ini</language>
 	</languages>
 
 	<administration>
 		<menu>Supply Order</menu>
 		<submenu>
-			<menu link="option=com_com_supply_order">Configuration</menu>
+			<menu link="option=com_supply_order">Configuration</menu>
 		</submenu>
 		<!-- Administration Main File Copy Section -->
 		<files>
@@ -50,7 +50,7 @@
 		<files folder="administrator">
 			<filename>install.mysql.sql</filename>
 			<filename>uninstall.mysql.sql</filename>
-			<filename>com_supply_order.php</filename>
+			<filename>supply_order.php</filename>
 			<filename>controller.php</filename>
 			<filename>config.xml</filename>
 			<folder>helpers</folder>
@@ -61,8 +61,8 @@
 		</files>
 		<!-- Language Administrator -->
 		<languages folder="administrator/language/">
-			<language tag="en-GB">en-GB.com_com_supply_order.menu.ini</language>
-			<language tag="en-GB">en-GB.com_com_supply_order.ini</language>
+			<language tag="en-GB">en-GB.com_supply_order.menu.ini</language>
+			<language tag="en-GB">en-GB.com_supply_order.ini</language>
 		</languages>
 	</administration>
 </install>
