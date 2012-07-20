@@ -12,86 +12,183 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 ?>
+
 <script type="text/javascript">
 <!--
-	Window.onDomReady(function(){
-		document.formvalidator.setHandler('passverify', function (value) { return ($('password').value == value); }	);
-	});
-// -->
+	jQuery(document).ready(function() {
+	    jQuery('#unitPrice,#quantity').change(function() {
+		    var total = parseFloat(jQuery('#unitPrice').val()) * parseInt(jQuery('#quantity').val());
+	    	jQuery('#totalPrice').update("Total Price: $ "+total);
+	    });
+
+	    jQuery("#dateRequired").datepicker();
+
+	 	// validate signup form on keyup and submit
+		var validator = $("#supplyOrderRequestForm").validate({
+			rules: {
+				vendor: "required",
+				quantity: "required digits",
+				unitPrice: "required number",
+				unitMeasure: "required",
+				description: "required",
+				dateRequired: "required date",
+				shipTo: "required",
+				accountId: "required"
+			},
+			messages: {
+				vendor: "Please enter a vendor.",
+				quantity: "Please enter a quantity.",
+				unitPrice: "Please enter valid amount like 10.89.",
+				unitMeasure: "Please select a unit measure.",
+				description: "Please enter a description.",
+				dateRequired: "Please select the date by which you need this request filled.",
+				shipTo: "Please select which location this request should be shipped to.",
+				accountId: "Please select which account this request should be placed under."
+			}
+		});
+		
+		jQuery('vendor').focus(); 
+	  });
+	};
+//-->
 </script>
 
 <?php
-	if(isset($this->message)){
-		$this->display('message');
-	}
+if(isset($this->message)){
+	$this->display('message');
+}
 ?>
 
-<form action="<?php echo JRoute::_( 'index.php?option=com_supply_order' ); ?>" method="post" id="josForm" name="josForm" class="form-validate">
+<form
+	action="<?php echo JRoute::_( 'index.php?option=com_supply_order' ); ?>"
+	method="post" id="supplyOrderRequestForm" name="supplyOrderRequestForm" >
 
-<?php if ( $this->params->def( 'show_page_title', 1 ) ) : ?>
-<div class="componentheading<?php echo $this->escape($this->params->get('pageclass_sfx')); ?>"><?php echo $this->escape($this->params->get('page_title')); ?></div>
-<?php endif; ?>
+	<?php if ( $this->params->def( 'show_page_title', 1 ) ) : ?>
+	<div
+		class="componentheading<?php echo $this->escape($this->params->get('pageclass_sfx')); ?>">
+		<?php echo $this->escape($this->params->get('page_title')); ?>
+	</div>
+	<?php endif; ?>
 
-<table cellpadding="0" cellspacing="0" border="0" width="100%" class="contentpane">
-<tr>
-	<td width="30%" height="40">
-		<label id="namemsg" for="name">
-			<?php echo JText::_( 'Name' ); ?>:
-		</label>
-	</td>
-  	<td>
-  		<input type="text" name="name" id="name" size="40" value="<?php echo $this->escape($this->user->get( 'name' ));?>" class="inputbox required" maxlength="50" /> *
-  	</td>
-</tr>
-<tr>
-	<td height="40">
-		<label id="usernamemsg" for="username">
-			<?php echo JText::_( 'User name' ); ?>:
-		</label>
-	</td>
-	<td>
-		<input type="text" id="username" name="username" size="40" value="<?php echo $this->escape($this->user->get( 'username' ));?>" class="inputbox required validate-username" maxlength="25" /> *
-	</td>
-</tr>
-<tr>
-	<td height="40">
-		<label id="emailmsg" for="email">
-			<?php echo JText::_( 'Email' ); ?>:
-		</label>
-	</td>
-	<td>
-		<input type="text" id="email" name="email" size="40" value="<?php echo $this->escape($this->user->get( 'email' ));?>" class="inputbox required validate-email" maxlength="100" /> *
-	</td>
-</tr>
-<tr>
-	<td height="40">
-		<label id="pwmsg" for="password">
-			<?php echo JText::_( 'Password' ); ?>:
-		</label>
-	</td>
-  	<td>
-  		<input class="inputbox required validate-password" type="password" id="password" name="password" size="40" value="" /> *
-  	</td>
-</tr>
-<tr>
-	<td height="40">
-		<label id="pw2msg" for="password2">
-			<?php echo JText::_( 'Verify Password' ); ?>:
-		</label>
-	</td>
-	<td>
-		<input class="inputbox required validate-passverify" type="password" id="password2" name="password2" size="40" value="" /> *
-	</td>
-</tr>
-<tr>
-	<td colspan="2" height="40">
-		<?php echo JText::_( 'REGISTER_REQUIRED' ); ?>
-	</td>
-</tr>
-</table>
-	<button class="button validate" type="submit"><?php echo JText::_('Register'); ?></button>
-	<input type="hidden" name="task" value="register_save" />
-	<input type="hidden" name="id" value="0" />
-	<input type="hidden" name="gid" value="0" />
+	<table cellpadding="0" cellspacing="0" border="0" width="100%"
+		class="contentpane">
+		<tr>
+			<td><?php echo JText::_( 'Vendor Name' ); ?> <span style="color: red;">*</span>
+			</td>
+			<td><input type="text" name="vendor" id="vendor" class="inputbox required" /></td>
+		</tr>
+		<tr>
+			<td><?php echo JText::_( 'Item No.' ); ?></td>
+			<td><input type="text" name="itemNum" id="itemNum" class="inputbox" /></td>
+		</tr>
+		<tr>
+			<td><?php echo JText::_( 'Color' ); ?></td>
+			<td><input type="text" name="color" id="color" class="inputbox" /></td>
+		</tr>
+		<tr>
+			<td><?php echo JText::_( 'Quantity' ); ?><span style="color: red;">*</span></td>
+			<td><input type="text" name="quantity" id="quantity" class="inputbox" /></td>
+		</tr>
+		<tr>
+			<td><?php echo JText::_( 'Unit Price' ); ?> <span style="color: red;">*</span>
+			</td>
+			<td>$<input type="text" name="unitPrice" id="unitPrice"
+				class="inputbox" width="248px;" />	<span id="totalPrice"></span>
+			</td>
+		</tr>
+		<tr>
+			<td><?php echo JText::_( 'Unit Measure' ); ?> <span style="color: red;">*</span>
+			</td>
+			<td><select id="unitMeasure" name="unitMeasure">
+					<option value=" ">Select One</option>
+					<option value="Each">Each</option>
+					<option value="Dozen">Dozen</option>
+					<option value="Pack">Pack</option>
+					<option value="Case">Case</option>
+					<option value="Roll">Roll</option>
+					<option value="Set">Set</option>
+					<option value="Other">Other (Explain in Comments)</option>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td><?php echo JText::_( 'Description' ); ?> <span style="color: red;">*</span>
+			</td>
+			<td><textarea cols="50" id="description" name="description" rows="7"
+					class="inputbox"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><i><?php echo JText::_( 'Allow at least 2 weeks to process.' ); ?></i></td>
+		</tr>
+		<tr>
+			<td><?php echo JText::_( 'Need By' ); ?> <span style="color: red;">*</span>
+			</td>
+			<td>
+				<input	type="text" name="dateRequired" id="dateRequired" class="inputbox" />
+			</td>
+		</tr>
+		<tr>
+			<td><?php echo JText::_( 'Ship To' ); ?> <span style="color: red;">*</span>
+			</td>
+			<td><select id="shipTo" name="shipTo">
+					<option value=""><?php echo JText::_( 'Select One' ); ?></option>
+					<option value="Admin@CEN">Admin@CEN</option>
+					<option value="Admin@ECO">Admin@ECO</option>
+					<option value="CEN">Central Branch</option>
+					<option value="ECO">East Columbia Branch</option>
+					<option value="ELK">Elkridge Branch</option>
+					<option value="GLE">Glenwood Branch</option>
+					<option value="MIL">Miller Branch</option>
+					<option value="SAV">Savage Branch</option>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><i><?php echo JText::_( 'Please provide URL (Link for web-site)' ); ?></i></td>
+		</tr>
+		<tr>
+			<td><?php echo JText::_( 'URL' ); ?></td>
+			<td><input type="text" name="url" id="url" class="inputbox" /> <span>
+			</span>
+			</td>
+		</tr>
+		<tr>
+			<td><?php echo JText::_( 'Account' ); ?> <span style="color: red;">*</span>
+			</td>
+			<td><select name="accountId" id="accountId">
+					<option value=""><?php echo JText::_( 'Select Account' ); ?>:</option> 
+					<?php 
+					foreach ($accounts as $account) {
+						?>
+						<option value="<?php echo $account['id']; ?>">
+							<?php echo	$account['number'] . " " . 
+										$account['description'] . " " . 
+										$account['owner']; 
+							?>
+						</option>
+						<?php 	
+					}
+					?>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td><?php echo JText::_( 'Comments' ); ?></td>
+			<td><textarea cols="50" id="comments" name="comments" rows="7"
+					class="inputbox"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><input type="submit" value="Save" name="saveOrder" /> <input
+				type="button" value="Cancel" name="cancel"
+				onclick="validator.resetForm(); jQuery('supplyOrderRequestForm').reset; jQuery('vendor').focus();"></input>
+			</td>
+		</tr>
+	</table>
+	<input type="hidden" name="task" value="request_save" /> 
 	<?php echo JHTML::_( 'form.token' ); ?>
 </form>

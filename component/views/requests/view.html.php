@@ -26,6 +26,11 @@ class SupplyOrderViewRequests extends JView
 	{
 		global $mainframe;
 		$document =& JFactory::getDocument();
+		$document->addScript(JURI::base(true).'/components/com_supply_order/js/jquery-1.7.2.min.js');
+		$document->addScriptDeclaration ( 'jQuery.noConflict();');
+		$document->addScript(JURI::base(true).'/components/com_supply_order/js/jquery.validate.min.js');
+		$document->addScript(JURI::base(true).'/components/com_supply_order/js/jquery-ui-1.8.21.custom.min.js');
+		$document->addStyleSheet(JURI::base(true).'/components/com_supply_order/css/smoothness/jquery-ui-1.8.21.custom');
 		
 		// Get the page/component configuration
 		$params = &$mainframe->getParams();
@@ -42,13 +47,10 @@ class SupplyOrderViewRequests extends JView
 			$params->set('page_title', JText::_( 'COM_SUPPLY_ORDER' ));
 		}
 		$document->setTitle( $params->get( 'page_title' ) );
-		
-		// Load the form validation behavior
-		JHTML::_('behavior.formvalidation');
 
 		$user =& JFactory::getUser();
 		$this->assignRef('user', $user);
-		$this->assignRef('params',		$params);
+		$this->assignRef('params', $params);
 		
 		parent::display($tpl);
 	}
