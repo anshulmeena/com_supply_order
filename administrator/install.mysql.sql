@@ -166,29 +166,29 @@ CREATE TABLE IF NOT EXISTS `#__so_roles` (
 -- Constraints for table `accounts`
 --
 ALTER TABLE `#__so_accounts`
-  ADD CONSTRAINT `fk_accounts_department_head1` FOREIGN KEY (`dept_head_id`) REFERENCES `department_head` (`dept_head_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_accounts_employee1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_accounts_department_head1` FOREIGN KEY (`dept_head_id`) REFERENCES `#__so_department_head` (`dept_head_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_accounts_employee1` FOREIGN KEY (`employee_id`) REFERENCES `#__so_employee` (`employee_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `employee`
 --
 ALTER TABLE `#__so_employee`
-  ADD CONSTRAINT `fk_user_roles10` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_user_roles10` FOREIGN KEY (`role_id`) REFERENCES `#__so_roles` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `files`
 --
 ALTER TABLE `#__so_files`
-  ADD CONSTRAINT `fk_files_order` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_files_order` FOREIGN KEY (`order_id`) REFERENCES `#__so_order` (`order_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `order`
 --
 ALTER TABLE `#__so_order`
-  ADD CONSTRAINT `fk_order_order_status1` FOREIGN KEY (`order_status_id`) REFERENCES `order_status` (`order_status_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_order_order_status1` FOREIGN KEY (`order_status_id`) REFERENCES `#__so_order_status` (`order_status_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `order_comments`
 --
 ALTER TABLE `#__so_order_comments`
-  ADD CONSTRAINT `fk_order_comments_order1` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_order_comments_order1` FOREIGN KEY (`order_id`) REFERENCES `#__so_order` (`order_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
